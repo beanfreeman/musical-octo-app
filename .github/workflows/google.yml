@@ -37,4 +37,4 @@ jobs:
         run: |
             ls -l -a
             pwd
-            sleep 10
+            sleep 100
