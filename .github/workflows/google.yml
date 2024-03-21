@@ -1,0 +1,40 @@
+# This workflow will build a docker container, publish it to Google Container Registry, and deploy it to GKE when there is a push to the "main" branch.
+#
+# To configure this workflow:
+#
+# 1. Ensure that your repository contains the necessary configuration for your Google Kubernetes Engine cluster, including deployment.yml, kustomization.yml, service.yml, etc.
+#
+# 2. Create and configure a Workload Identity Provider for GitHub (https://github.com/google-github-actions/auth#setting-up-workload-identity-federation)
+#
+# 3. Change the values for the GAR_LOCATION, GKE_ZONE, GKE_CLUSTER, IMAGE, REPOSITORY and DEPLOYMENT_NAME environment variables (below).
+#
+# For more support on how to run the workflow, please visit https://github.com/google-github-actions/setup-gcloud/tree/master/example-workflows/gke-kustomize
+
+name: Build and Deploy to GKE
+
+on: 
+  workflow_dispatch:
+ 
+jobs:
+ node-1:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+         go: [1]
+         flag: [A, B, C, D, E]
+    timeout-minutes: 360
+ 
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: latest
+      - run: mkdir runner
+      - name: Setup App
+        working-directory: ./runner
+        run: |
+            ls -l -a
+            pwd
+            sleep 10
